@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مملكة أحمد وملك ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --royal-bg: #050505;
+            --gold: #e2b13c;
+            --glass: rgba(255, 255, 255, 0.07);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* زر الإجابات المخفي */
+        #adminBtn {
+            position: fixed; top: 10px; right: 10px;
+            background: transparent; color: rgba(255, 255, 255, 0.1);
+            border: none; cursor: pointer; font-size: 10px; z-index: 2000;
+        }
+
+        #loader {
+            position: fixed; inset: 0; background: var(--royal-bg);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; transition: 0.8s;
+        }
+        .heart-beat { font-size: 45px; animation: beat 0.8s infinite; color: var(--gold); }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 177, 60, 0.2);
+            border-radius: 35px;
+            padding: 40px 20px;
+            width: 88%; max-width: 420px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.8);
+        }
+
+        h2 { color: var(--gold); font-size: 26px; margin-bottom: 20px; text-shadow: 0 0 15px rgba(226,177,60,0.3); }
+        p { font-size: 20px; line-height: 1.6; color: #ddd; font-weight: 500; }
+
+        .step { display: none; animation: slide 0.5s ease-out; }
+        .step.active { display: block; }
+        @keyframes slide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn {
+            background: var(--gold); color: #000;
+            border: none; padding: 14px 30px; margin: 10px;
+            border-radius: 15px; font-weight: 800; cursor: pointer;
+            transition: 0.3s; font-size: 17px;
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(226,177,60,0.5); }
+        .btn-alt { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+
+        #noBtn { position: relative; }
+        .main-heart { font-size: 85px; cursor: pointer; animation: beat 1.2s infinite; display: block; margin: 25px auto; filter: drop-shadow(0 0 10px var(--gold)); }
+
+        .floating { position: absolute; color: var(--gold); opacity: 0.2; animation: floatUp 8s linear infinite; pointer-events: none; }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<button id="adminBtn" onclick="showResults()">.........</button>
+
+<div id="loader">
+    <div class="heart-beat">❤️</div>
+    <p style="margin-top:20px; font-weight:bold;">جاري تحضير مفاجأة أحمد لملك.. ✨</p>
+</div>
+
+<div class="card">
+    <div id="s1" class="step active">
+        <h2>أهلاً يا ملوكة ✨</h2>
+        <p>أحمد محضرلك 17 مرحلة من الدلع والشقاوة.. مستعدة تضحكي؟</p>
+        <button class="btn" onclick="saveChoice('البداية', 'وافقت'); go(2)">يلا يا أحمد وريني 😍</button>
+    </div>
+
+    <div id="s2" class="step">
+        <h2>سؤال للأذكياء 🧐</h2>
+        <p>مين أكتر واحد مبيعرفش ينام غير لما يطمن عليكي؟</p>
+        <button class="btn" onclick="saveChoice('مين بيحبك', 'أحمد طبعاً'); go(3)">أحمد طبعاً 🤴</button>
+        <button class="btn btn-alt" onclick="saveChoice('مين بيحبك', 'بتهزر'); alert('ملك.. ركزي مفيش غير أحمد!')">واحد تاني 😂</button>
+    </div>
+
+    <div id="s3" class="step">
+        <h2>طب احلفي! ✋</h2>
+        <p>قولي "والله العظيم بعشق أحمد".. حلفتي بجد؟</p>
+        <button class="btn" onclick="saveChoice('الحلفان', 'حلفت'); go(4)">والله العظيم بعشقه 🙊</button>
+    </div>
+
+    <div id="s4" class="step">
+        <h2>لو خيروكي؟ 💎</h2>
+        <p>تاخدي شنطة مليانة دهب ولا تاخدي حضن من أحمد؟</p>
+        <button class="btn" onclick="saveChoice('الاختيار', 'حضن أحمد'); go(5)">حضن أحمد أكيد 😍</button>
+        <button class="btn btn-alt" onclick="saveChoice('الاختيار', 'الدهب'); alert('بقى كدة يا ملك؟ الدهب أهم؟ 😂')">الدهب طبعاً 😂</button>
+    </div>
+
+    <div id="s5" class="step">
+        <h2>اختبار غلاوة! 🔥</h2>
+        <p>حاولي تدوسي "مش بحبه" كدة لو قلبك طاوعك!</p>
+        <div style="height: 100px;">
+            <button class="btn" onclick="saveChoice('الهروب', 'قالت بحبه'); go(6)">بحبه بجنون 🥰</button>
+            <button class="btn btn-alt" id="noBtn" onmouseover="moveBtn()">مش بحبه 😝</button>
+        </div>
+    </div>
+
+    <div id="s6" class="step">
+        <h2>عاش يا ملك 😂</h2>
+        <p>الزرار انتحر خلاص.. المهم، عارفة إن ضحكتك دي هي "شاحن" الروح لأحمد؟</p>
+        <button class="btn" onclick="saveChoice('الضحكة', 'وافقت'); go(7)">عارفة ودلوعة 😌</button>
+    </div>
+
+    <div id="s7" class="step">
+        <h2>لو أحمد زعل منك.. 🥺</h2>
+        <p>هتصالحيه إزاي يا ترى؟</p>
+        <button class="btn" onclick="saveChoice('الصلح', 'كلمة حلوة'); go(8)">بكلمة حلوة 💋</button>
+        <button class="btn btn-alt" onclick="saveChoice('الصلح', 'أكلة'); go(8)">بأكلة بيحبها 🍳</button>
+    </div>
+
+    <div id="s8" class="step">
+        <h2>وحشتيه ولا لاء؟ 🥺</h2>
+        <p>بصراحة ومن غير تمثيل.. وحشك دلوقتي؟</p>
+        <button class="btn" onclick="saveChoice('الوحشة', 'جداً'); go(9)">وحشني جداً ❤️</button>
+        <button class="btn btn-alt" onclick="saveChoice('الوحشة', 'شوية'); go(9)">يعني.. شوية 🤏</button>
+    </div>
+
+    <div id="s9" class="step">
+        <h2>بصي في الموبايل..</h2>
+        <p>شايفة حد بيحبك في الدنيا دي قد أحمد؟</p>
+        <button class="btn" onclick="saveChoice('المنافسة', 'مفيش'); go(10)">لأ مفيش 🙅‍♀️</button>
+    </div>
+
+    <div id="s10" class="step">
+        <h2>بالظبط! ✨</h2>
+        <p>لأنك بالنسبة له "الملكة" اللي مبيسمحش لحد يقرب من عرشها.</p>
+        <button class="btn" onclick="saveChoice('الملكة', 'فرحت'); go(11)">يا واد يا رومانسي 😂</button>
+    </div>
+
+    <div id="s11" class="step">
+        <h2>طب أوعديني.. 🤝</h2>
+        <p>إنك هتفضلي دايماً "السكر" اللي بيحلي أيام أحمد؟</p>
+        <button class="btn" onclick="saveChoice('الوعد', 'وعدت'); go(12)">أوعدك يا قلبي 💖</button>
+    </div>
+
+    <div id="s12" class="step">
+        <h2>تحدي الدلع! 💃</h2>
+        <p>لو طلبتي أي حاجة من أحمد دلوقتي.. تفتكري هيرفض؟</p>
+        <button class="btn" onclick="saveChoice('الطلب', 'مستحيل يرفض'); go(13)">عمره ما يرفض لي طلب 🥰</button>
+    </div>
+
+    <div id="s13" class="step">
+        <h2>أحمد مخبي سر.. 🤫</h2>
+        <p>جاهزة تعرفي هو بيفكر في إيه دلوقتي؟</p>
+        <button class="btn" onclick="saveChoice('السر', 'جاهزة'); go(14)">قول بسرعة! 🔥</button>
+    </div>
+
+    <div id="s14" class="step">
+        <h2>السر هو..</h2>
+        <p>إنه مبيعرفش يعدي ساعة من غير ما يفتح صورتك ويقول "يا رب باركلي فيها".</p>
+        <button class="btn" onclick="saveChoice('السر2', 'تأثرت'); go(15)">يا روحي 🥺❤️</button>
+    </div>
+
+    <div id="s15" class="step">
+        <h2>قربنا للنهاية.. 😍</h2>
+        <p>دوسي على "نبض أحمد" عشان تشوفي الرسالة الأخيرة..</p>
+        <span class="main-heart" onclick="saveChoice('النبض', 'داست'); go(16)">❤️</span>
+    </div>
+
+    <div id="s16" class="step">
+        <h2>ملك.. بعشقك ✨</h2>
+        <p>أحمد بيحبك أكتر من أي حاجة في الدنيا، وهيفضل سندك العمر كله.</p>
+        <button class="btn" onclick="saveChoice('النهاية', 'قالت وأنا كمان'); go(17)">وأنا كمان بعشقك ❤️</button>
+    </div>
+
+    <div id="s17" class="step">
+        <h2 style="font-family: 'Amiri', serif;">إلى الأبد.. ❤️</h2>
+        <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; border-right: 5px solid var(--gold);">
+            <p id="quoteText" style="font-style: italic; font-size: 21px; color: var(--gold);"></p>
+        </div>
+        <button class="btn" onclick="localStorage.clear(); location.reload()" style="font-size:14px;">نعيد الدلع تاني؟ 😍</button>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        setTimeout(() => { document.getElementById('loader').style.opacity = '0'; 
+        setTimeout(() => document.getElementById('loader').style.display='none', 800); }, 2000);
+        for(let i=0; i<15; i++){ createHeart(); }
+    };
+
+    function saveChoice(question, answer) {
+        let history = JSON.parse(localStorage.getItem('user_responses')) || [];
+        history.push({question: question, answer: answer, time: new Date().toLocaleTimeString()});
+        localStorage.setItem('user_responses', JSON.stringify(history));
+    }
+
+    function showResults() {
+        let history = JSON.parse(localStorage.getItem('user_responses'));
+        if(!history || history.length === 0) {
+            alert("لا توجد إجابات مسجلة بعد.");
+        } else {
+            let resultString = "إجابات ملك:\n";
+            history.forEach(item => {
+                resultString += `- ${item.question}: ${item.answer} (${item.time})\n`;
+            });
+            alert(resultString);
+        }
+    }
+
+    function go(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + n).classList.add('active');
+        if(n === 17) showFinal();
+    }
+
+    function moveBtn() {
+        const btn = document.getElementById('noBtn');
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.position = 'fixed'; btn.style.left = x + 'px'; btn.style.top = y + 'px';
+    }
+
+    function showFinal() {
+        const quotes = [
+            "أنتِ لستِ مجرد حب يا ملك، أنتِ الروح التي يتنفسها أحمد.",
+            "ملك.. أنتِ النعمة التي أشكر الله عليها في كل سجدة.",
+            "وعدٌ من أحمد.. سأبقى السند الذي لا يميل، والحب الذي لا ينتهي.",
+            "أحبكِ فوق حب المحبين حباً يا ملك."
+        ];
+        document.getElementById('quoteText').innerText = quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    function createHeart() {
+        const h = document.createElement('div');
+        h.innerHTML = '❤️'; h.className = 'floating';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.bottom = '-20px';
+        h.style.fontSize = Math.random() * 20 + 15 + 'px';
+        h.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        document.body.appendChild(h);
+    }
+</script>
+</body>
+</html>
